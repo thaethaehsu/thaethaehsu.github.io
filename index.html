@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Thae Thae Hsu (Tracy) — Full-Stack Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg0:#07070D;--bg1:#0F0F18;--bg2:#15151F;--bg3:#1C1C28;--bg4:#252535;--border:rgba(255,255,255,0.07);--border-strong:rgba(255,255,255,0.13);--violet:#9B8CF8;--violet-light:#C4BAFC;--violet-dim:rgba(155,140,248,0.12);--gold:#E8B84B;--gold-dim:rgba(232,184,75,0.12);--teal:#2DD4BF;--teal-dim:rgba(45,212,191,0.1);--text1:#F0EFF8;--text2:#A8A6C0;--text3:#6A688A;--r:12px;--rl:20px;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg0);color:var(--text1);font-family:'Inter',sans-serif;line-height:1.6;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:var(--bg1);}::-webkit-scrollbar-thumb{background:var(--violet);border-radius:2px;}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 6%;height:64px;background:rgba(7,7,13,0.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'DM Serif Display',serif;font-size:22px;color:var(--violet-light);text-decoration:none;}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s;}
+.nav-links a:hover{color:var(--text1);}
+.nav-cta{background:var(--violet);color:#fff;padding:8px 20px;border-radius:99px;font-size:13px;font-weight:500;text-decoration:none;transition:opacity .2s;}
+.nav-cta:hover{opacity:.85;}
+
+#hero{min-height:100vh;display:flex;align-items:center;padding:100px 6% 60px;background:radial-gradient(ellipse 70% 60% at 80% 40%,rgba(155,140,248,.06) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 20% 70%,rgba(45,212,191,.04) 0%,transparent 60%);}
+.hero-inner{display:grid;grid-template-columns:1fr 400px;gap:80px;align-items:center;max-width:1200px;margin:0 auto;width:100%;}
+.hero-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.eyebrow-dot{width:8px;height:8px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+.eyebrow-text{font-size:12px;font-weight:500;color:var(--teal);letter-spacing:.12em;text-transform:uppercase;}
+.hero-name{font-family:'DM Serif Display',serif;font-size:clamp(40px,5vw,66px);line-height:1.05;color:var(--text1);margin-bottom:8px;}
+.hero-name span{color:var(--violet);font-style:italic;}
+.hero-title{font-size:clamp(15px,1.8vw,19px);color:var(--text2);font-weight:300;margin-bottom:22px;}
+.hero-desc{font-size:15px;color:var(--text3);line-height:1.78;max-width:540px;margin-bottom:34px;}
+.hero-desc strong{color:var(--text2);font-weight:500;}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:44px;}
+.btn-primary{background:var(--violet);color:#fff;padding:11px 26px;border-radius:99px;font-size:14px;font-weight:500;text-decoration:none;transition:transform .2s,opacity .2s;}
+.btn-primary:hover{transform:translateY(-2px);opacity:.9;}
+.btn-outline{border:1px solid var(--border-strong);color:var(--text2);padding:11px 26px;border-radius:99px;font-size:14px;font-weight:500;text-decoration:none;transition:all .2s;display:flex;align-items:center;gap:8px;}
+.btn-outline:hover{border-color:var(--violet);color:var(--violet);}
+.hero-stats{display:flex;gap:36px;}
+.stat-item{display:flex;flex-direction:column;}
+.stat-number{font-family:'DM Serif Display',serif;font-size:32px;color:var(--text1);line-height:1;}
+.stat-label{font-size:12px;color:var(--text3);margin-top:4px;}
+.hero-photo-wrap{position:relative;}
+.hero-photo-frame{width:360px;height:450px;border-radius:var(--rl);overflow:hidden;position:relative;border:1px solid var(--border-strong);box-shadow:0 40px 80px rgba(0,0,0,.5),0 0 0 1px rgba(155,140,248,.1);}
+.hero-photo-frame img{width:100%;height:100%;object-fit:cover;object-position:top center;}
+.hero-photo-badge{position:absolute;bottom:-14px;right:-14px;background:var(--bg3);border:1px solid var(--border-strong);border-radius:var(--r);padding:13px 16px;}
+.badge-top{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;}
+.badge-val{font-size:13px;color:var(--violet-light);font-weight:600;}
+.hero-photo-tag{position:absolute;top:-14px;left:20px;background:var(--bg3);border:1px solid var(--border-strong);border-radius:99px;padding:6px 14px;font-size:12px;color:var(--teal);font-weight:500;}
+.glow-ring{position:absolute;inset:-2px;border-radius:calc(var(--rl) + 2px);background:linear-gradient(135deg,rgba(155,140,248,.3),transparent 50%,rgba(45,212,191,.2));z-index:-1;}
+
+section{padding:96px 6%;}
+.section-inner{max-width:1200px;margin:0 auto;}
+.section-eyebrow{font-size:11px;font-weight:600;color:var(--violet);letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px;}
+.section-title{font-family:'DM Serif Display',serif;font-size:clamp(28px,3.5vw,44px);color:var(--text1);line-height:1.1;margin-bottom:14px;}
+.section-sub{font-size:15px;color:var(--text3);max-width:560px;line-height:1.7;margin-bottom:52px;}
+.divider{height:1px;background:var(--border);margin:0 6%;}
+
+#about{background:var(--bg1);}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+.about-text p{color:var(--text2);font-size:15px;line-height:1.85;margin-bottom:16px;}
+.about-text p strong{color:var(--text1);font-weight:500;}
+.journey-item{display:flex;gap:18px;padding-bottom:28px;position:relative;}
+.journey-item:last-child{padding-bottom:0;}
+.journey-item::before{content:'';position:absolute;left:17px;top:36px;bottom:0;width:1px;background:var(--border);}
+.journey-item:last-child::before{display:none;}
+.j-icon{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+.j-content h4{font-size:14px;font-weight:600;color:var(--text1);margin-bottom:2px;}
+.j-content p{font-size:13px;color:var(--text3);line-height:1.5;}
+.j-content span{font-size:11px;color:var(--violet);font-weight:500;display:block;margin-bottom:3px;letter-spacing:.05em;text-transform:uppercase;}
+
+#skills{background:var(--bg0);}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.skill-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:22px;transition:border-color .2s,transform .2s;}
+.skill-card:hover{border-color:var(--border-strong);transform:translateY(-2px);}
+.skill-card-title{font-size:12px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{font-size:12px;font-weight:500;padding:4px 11px;border-radius:99px;}
+.tag-v{background:var(--violet-dim);color:var(--violet-light);}
+.tag-g{background:var(--gold-dim);color:var(--gold);}
+.tag-t{background:var(--teal-dim);color:var(--teal);}
+.tag-w{background:rgba(255,255,255,.06);color:var(--text2);}
+
+#experience{background:var(--bg1);}
+.tl-item{display:grid;grid-template-columns:170px 1fr;gap:36px;padding-bottom:52px;position:relative;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-date{text-align:right;padding-top:4px;}
+.tl-date-range{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3);line-height:1.5;}
+.tl-date-company{font-size:12px;color:var(--violet);font-weight:500;margin-top:4px;}
+.tl-dl::before{content:'';position:absolute;left:181px;top:12px;bottom:-52px;width:1px;background:var(--border);}
+.tl-item:last-child .tl-dl::before{display:none;}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--violet);position:absolute;left:177px;top:5px;box-shadow:0 0 0 3px rgba(155,140,248,.2);}
+.tl-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:22px 26px;}
+.tl-role{font-size:16px;font-weight:600;color:var(--text1);margin-bottom:3px;}
+.tl-org{font-size:13px;color:var(--text3);margin-bottom:14px;}
+.tl-pts{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.tl-pts li{font-size:13px;color:var(--text2);padding-left:16px;position:relative;line-height:1.6;}
+.tl-pts li::before{content:'▸';position:absolute;left:0;color:var(--violet);font-size:10px;top:3px;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;}
+
+#education{background:var(--bg0);}
+.edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.edu-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:30px;position:relative;overflow:hidden;transition:border-color .2s;}
+.edu-card:hover{border-color:var(--border-strong);}
+.edu-card.ft{border-color:rgba(155,140,248,.3);}
+.edu-card::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at top right,rgba(155,140,248,.05),transparent 60%);pointer-events:none;}
+.edu-badge{display:inline-block;font-size:10px;font-weight:600;padding:3px 10px;border-radius:99px;margin-bottom:14px;text-transform:uppercase;letter-spacing:.08em;}
+.b-cur{background:rgba(45,212,191,.15);color:var(--teal);}
+.b-done{background:rgba(255,255,255,.06);color:var(--text3);}
+.edu-deg{font-family:'DM Serif Display',serif;font-size:19px;color:var(--text1);margin-bottom:5px;line-height:1.3;}
+.edu-school{font-size:13px;color:var(--violet);font-weight:500;margin-bottom:3px;}
+.edu-period{font-size:12px;color:var(--text3);margin-bottom:14px;}
+.edu-hl{list-style:none;display:flex;flex-direction:column;gap:6px;}
+.edu-hl li{font-size:12px;color:var(--text2);padding-left:14px;position:relative;}
+.edu-hl li::before{content:'·';position:absolute;left:4px;color:var(--violet);font-weight:700;}
+
+#projects{background:var(--bg1);}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.proj-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:26px;transition:all .2s;position:relative;overflow:hidden;}
+.proj-card:hover{border-color:rgba(155,140,248,.3);transform:translateY(-3px);}
+.proj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.proj-card.pv::before{background:linear-gradient(90deg,var(--violet),var(--teal));}
+.proj-card.pg::before{background:linear-gradient(90deg,var(--gold),#F97316);}
+.proj-card.pt::before{background:linear-gradient(90deg,var(--teal),var(--violet));}
+.proj-role{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.12em;margin-bottom:9px;}
+.proj-name{font-family:'DM Serif Display',serif;font-size:22px;color:var(--text1);margin-bottom:9px;}
+.proj-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:14px;}
+.proj-hl{list-style:none;margin-bottom:14px;display:flex;flex-direction:column;gap:5px;}
+.proj-hl li{font-size:12px;color:var(--text3);padding-left:14px;position:relative;}
+.proj-hl li::before{content:'▸';position:absolute;left:0;color:var(--teal);font-size:10px;top:2px;}
+
+#hackathon{background:var(--bg0);}
+.hack-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.hack-photo{border-radius:var(--rl);overflow:hidden;border:1px solid var(--border);position:relative;}
+.hack-photo img{width:100%;height:380px;object-fit:cover;object-position:center top;display:block;}
+.hack-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,rgba(7,7,13,.9),transparent);padding:18px 22px;}
+.hack-ov-label{font-size:11px;color:var(--text3);margin-bottom:2px;}
+.hack-ov-val{font-size:13px;font-weight:600;color:var(--text1);}
+.aws-badge{display:inline-flex;align-items:center;gap:8px;background:var(--bg2);border:1px solid var(--border);border-radius:99px;padding:6px 14px;margin-bottom:18px;}
+.aws-badge-text{font-size:11px;color:var(--gold);font-weight:600;text-transform:uppercase;letter-spacing:.08em;}
+.hack-pts{list-style:none;margin-top:18px;display:flex;flex-direction:column;gap:10px;}
+.hack-pts li{font-size:13px;color:var(--text2);display:flex;gap:10px;line-height:1.6;}
+.hack-pts li::before{content:'→';color:var(--gold);font-weight:500;flex-shrink:0;}
+
+#gallery{background:var(--bg1);}
+.gal-grid{columns:3;gap:11px;}
+.gal-item{break-inside:avoid;margin-bottom:11px;border-radius:var(--r);overflow:hidden;position:relative;border:1px solid var(--border);}
+.gal-item img{width:100%;display:block;transition:transform .4s ease;}
+.gal-item:hover img{transform:scale(1.04);}
+.gal-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(0deg,rgba(7,7,13,.85),transparent);padding:16px 11px 9px;font-size:11px;color:var(--text2);opacity:0;transition:opacity .3s;}
+.gal-item:hover .gal-cap{opacity:1;}
+
+#volunteering{background:var(--bg0);}
+.vol-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.vol-photo{border-radius:var(--rl);overflow:hidden;border:1px solid var(--border);}
+.vol-photo img{width:100%;height:360px;object-fit:cover;object-position:top;display:block;}
+.vol-tags{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0;}
+
+#contact{background:var(--bg1);}
+.contact-c{max-width:700px;text-align:center;margin:0 auto;}
+.contact-title{font-family:'DM Serif Display',serif;font-size:clamp(30px,4vw,50px);color:var(--text1);margin-bottom:14px;}
+.contact-sub{font-size:15px;color:var(--text3);margin-bottom:38px;line-height:1.7;}
+.contact-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:44px;}
+.c-link{display:flex;align-items:center;gap:10px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:13px 18px;text-decoration:none;color:var(--text2);font-size:13px;font-weight:500;transition:all .2s;}
+.c-link:hover{border-color:var(--violet);color:var(--violet);transform:translateY(-2px);}
+.c-link-icon{font-size:17px;}
+
+footer{background:var(--bg0);border-top:1px solid var(--border);padding:28px 6%;display:flex;align-items:center;justify-content:space-between;}
+.footer-name{font-family:'DM Serif Display',serif;font-size:17px;color:var(--violet-light);}
+.footer-copy{font-size:12px;color:var(--text3);}
+
+@media(max-width:900px){
+.hero-inner{grid-template-columns:1fr;}.hero-photo-wrap{display:none;}
+.about-grid,.edu-grid,.proj-grid,.hack-inner,.vol-inner{grid-template-columns:1fr;}
+.skills-grid{grid-template-columns:1fr 1fr;}.gal-grid{columns:2;}
+.tl-item{grid-template-columns:1fr;gap:6px;}.tl-date{text-align:left;}
+.tl-dl::before,.tl-dot{display:none;}.nav-links{display:none;}
+}
+@media(max-width:580px){.skills-grid{grid-template-columns:1fr;}.gal-grid{columns:1;}section{padding:68px 5%;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#hero" class="nav-logo">TH</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:tracylinn235@outlook.com" class="nav-cta">Hire Me</a>
+</nav>
+
+<section id="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow"><div class="eyebrow-dot"></div><span class="eyebrow-text">Open to opportunities · Singapore 🇸🇬</span></div>
+      <h1 class="hero-name">Thae Thae Hsu<br/><span>(Tracy)</span></h1>
+      <p class="hero-title">Full-Stack Developer · STEM Educator · AI Aspirant</p>
+      <p class="hero-desc">From teaching <strong>Robotics & Scratch to 200+ students</strong> in Myanmar to building <strong>production SaaS platforms</strong> in Singapore. Currently at NUS-ISS & Magenta Consulting — bridging human-centred teaching instincts with modern software engineering.</p>
+      <div class="hero-btns">
+        <a href="https://www.linkedin.com/in/thae-thae-hsu-539b35168/" target="_blank" class="btn-primary">LinkedIn Profile</a>
+        <a href="https://github.com/thaethaehsu" target="_blank" class="btn-outline"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>GitHub</a>
+        <a href="tel:+6580659916" class="btn-outline">📱 +65 8065 9916</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item"><span class="stat-number">200+</span><span class="stat-label">Students taught</span></div>
+        <div class="stat-item"><span class="stat-number">120+</span><span class="stat-label">API routes shipped</span></div>
+        <div class="stat-item"><span class="stat-number">37</span><span class="stat-label">UAT issues resolved</span></div>
+      </div>
+    </div>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-tag">🇲🇲 → 🇸🇬 Developer Journey</div>
+      <div class="hero-photo-frame">
+        <div class="glow-ring"></div>
+        <img src="images/profile.jpg" alt="Thae Thae Hsu Tracy"/>
+      </div>
+      <div class="hero-photo-badge"><div class="badge-top">Currently at</div><div class="badge-val">NUS-ISS · GDipSA</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="section-eyebrow">About Me</p>
+        <h2 class="section-title">Educator at heart.<br/>Engineer by craft.</h2>
+        <p>I believe the best software is built by people who truly understand the humans who use it. My years teaching Computer Science, STEM, and Robotics in Myanmar gave me exactly that — a deep understanding of how people learn, struggle, and grow with technology.</p>
+        <p>In 2025, I moved to Singapore to pursue a <strong>Graduate Diploma in System Analysis at NUS-ISS</strong>, where I fell in love with full-stack engineering. I now build production-grade features at <strong>Magenta Consulting Services</strong>, working on an AI-powered SaaS platform used by real businesses.</p>
+        <p>My goal is to combine the empathy of an educator and the rigour of an engineer to build AI systems that make a genuine difference — especially in education across ASEAN.</p>
+      </div>
+      <div>
+        <p class="section-eyebrow" style="margin-bottom:22px;">My Journey</p>
+        <div class="journey-item"><div class="j-icon" style="background:var(--teal-dim);">🎓</div><div class="j-content"><span>2013 – 2019</span><h4>B.Eng (Honours) in Information Technology</h4><p>Technological University Mandalay, Myanmar</p></div></div>
+        <div class="journey-item"><div class="j-icon" style="background:var(--gold-dim);">🏫</div><div class="j-content"><span>2022 – 2024</span><h4>STEM & Robotics Teacher</h4><p>Myanmar International Academy · 200+ students annually</p></div></div>
+        <div class="journey-item"><div class="j-icon" style="background:var(--violet-dim);">🧠</div><div class="j-content"><span>2025 – 2026</span><h4>Graduate Diploma in System Analysis</h4><p>NUS-ISS, Singapore · Full-stack engineering</p></div></div>
+        <div class="journey-item"><div class="j-icon" style="background:var(--teal-dim);">💻</div><div class="j-content"><span>Mar – Jul 2026</span><h4>Software Developer Intern</h4><p>Magenta Consulting Services · AcceClaim SaaS</p></div></div>
+        <div class="journey-item"><div class="j-icon" style="background:var(--gold-dim);">🚀</div><div class="j-content"><span>2027 →</span><h4>MTech in AI Systems — Goal</h4><p>NUS-ISS · Generative AI & Intelligent Systems</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="skills">
+  <div class="section-inner">
+    <p class="section-eyebrow">Technical Skills</p>
+    <h2 class="section-title">What I build with</h2>
+    <p class="section-sub">A full-stack toolkit built through real production work, not just tutorials.</p>
+    <div class="skills-grid">
+      <div class="skill-card"><div class="skill-card-title"><span>⚛️</span> Frontend</div><div class="skill-tags"><span class="tag tag-v">Next.js 16</span><span class="tag tag-v">React 19</span><span class="tag tag-v">TypeScript</span><span class="tag tag-w">JavaScript</span><span class="tag tag-w">Tailwind CSS</span><span class="tag tag-w">HTML5 / CSS3</span><span class="tag tag-w">Capacitor</span></div></div>
+      <div class="skill-card"><div class="skill-card-title"><span>⚙️</span> Backend</div><div class="skill-tags"><span class="tag tag-t">Java Spring Boot</span><span class="tag tag-t">Node.js</span><span class="tag tag-t">Next.js API Routes</span><span class="tag tag-w">RESTful API</span><span class="tag tag-w">Microservices</span><span class="tag tag-w">Flask</span></div></div>
+      <div class="skill-card"><div class="skill-card-title"><span>🗄️</span> Database & Cloud</div><div class="skill-tags"><span class="tag tag-g">PostgreSQL</span><span class="tag tag-g">Prisma ORM</span><span class="tag tag-g">SQLite</span><span class="tag tag-w">Azure Blob Storage</span><span class="tag tag-w">Docker</span></div></div>
+      <div class="skill-card"><div class="skill-card-title"><span>🧪</span> Testing & DevOps</div><div class="skill-tags"><span class="tag tag-v">CI/CD Pipelines</span><span class="tag tag-w">Selenium</span><span class="tag tag-w">JUnit</span><span class="tag tag-w">Vitest</span><span class="tag tag-w">UAT Testing</span><span class="tag tag-w">Git / GitHub</span></div></div>
+      <div class="skill-card"><div class="skill-card-title"><span>📖</span> Docs & Tools</div><div class="skill-tags"><span class="tag tag-t">Swagger UI</span><span class="tag tag-w">JPA / ORM</span><span class="tag tag-w">Optimistic Locking</span><span class="tag tag-w">MVC Pattern</span></div></div>
+      <div class="skill-card"><div class="skill-card-title"><span>🎓</span> Education Tech</div><div class="skill-tags"><span class="tag tag-g">Scratch Programming</span><span class="tag tag-g">Robotics</span><span class="tag tag-w">STEM Curriculum</span><span class="tag tag-w">ICT Teaching</span><span class="tag tag-w">KidsBits</span></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="experience">
+  <div class="section-inner">
+    <p class="section-eyebrow">Experience</p>
+    <h2 class="section-title">Where I've made an impact</h2>
+    <p class="section-sub">From classrooms in Myanmar to enterprise SaaS in Singapore.</p>
+    <div>
+      <div class="tl-item">
+        <div class="tl-date"><div class="tl-date-range">Mar 2026 –<br/>Jul 2026</div><div class="tl-date-company">Magenta Consulting<br/>Singapore 🇸🇬</div></div>
+        <div class="tl-dl"><div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-role">Software Developer Intern</div>
+            <div class="tl-org">Magenta Consulting Services Pte Ltd · Singapore</div>
+            <ul class="tl-pts">
+              <li>Built features for <strong>AcceClaim</strong> — an AI-powered B2B/B2C redemption management SaaS platform used by real enterprise clients.</li>
+              <li>Conducted UAT testing across 6 modules, identifying and documenting 37 issues; implemented fixes based on client requirements.</li>
+              <li>Developed Swagger UI API documentation for 120+ API routes, improving developer experience across the team.</li>
+              <li>Set up CI/CD pipelines and built reusable UI components to improve maintainability and deployment speed.</li>
+            </ul>
+            <div class="chips"><span class="tag tag-v">Next.js 16</span><span class="tag tag-v">TypeScript</span><span class="tag tag-t">PostgreSQL</span><span class="tag tag-t">Prisma ORM</span><span class="tag tag-g">Azure Blob</span><span class="tag tag-w">Swagger UI</span><span class="tag tag-w">Tailwind CSS</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date"><div class="tl-date-range">May 2022 –<br/>May 2024</div><div class="tl-date-company">Myanmar Intl<br/>Academy 🇲🇲</div></div>
+        <div class="tl-dl"><div class="tl-dot" style="background:var(--gold);box-shadow:0 0 0 3px rgba(232,184,75,.2);"></div>
+          <div class="tl-card">
+            <div class="tl-role">STEM Subject Teacher</div>
+            <div class="tl-org">Myanmar International Academy · Yangon, Myanmar</div>
+            <ul class="tl-pts">
+              <li>Taught Computer Science, STEM, and Robotics to 200+ students annually with 100% satisfaction rating.</li>
+              <li>Designed and delivered Scratch programming curriculum for primary and secondary students.</li>
+              <li>Led students through KidsBits Robotics projects — from circuit assembly to obstacle-avoidance robots.</li>
+              <li>Organised ICT project fairs, student showcases, and award ceremonies.</li>
+              <li>Taught HTML, Microsoft Office, and computer fundamentals in a dedicated computer lab.</li>
+            </ul>
+            <div class="chips"><span class="tag tag-g">Scratch</span><span class="tag tag-g">Robotics</span><span class="tag tag-g">KidsBits</span><span class="tag tag-w">HTML</span><span class="tag tag-w">ICT Curriculum</span><span class="tag tag-w">STEM Education</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="education">
+  <div class="section-inner">
+    <p class="section-eyebrow">Education</p>
+    <h2 class="section-title">Academic foundations</h2>
+    <p class="section-sub">Combining engineering fundamentals with advanced systems analysis.</p>
+    <div class="edu-grid">
+      <div class="edu-card ft">
+        <span class="edu-badge b-cur">In Progress</span>
+        <div class="edu-deg">Graduate Diploma in System Analysis</div>
+        <div class="edu-school">National University of Singapore — Institute of Systems Science (NUS-ISS)</div>
+        <div class="edu-period">Aug 2025 – 2026 (Expected)</div>
+        <ul class="edu-hl">
+          <li>Full-stack web development with modern frameworks</li>
+          <li>Software architecture, system design & agile methods</li>
+          <li>Database design, cloud computing & DevOps practices</li>
+          <li>Participated in AWS Skills to Jobs Tech Alliance Hackathon</li>
+          <li>Pathway toward MTech in Artificial Intelligence Systems (2027)</li>
+        </ul>
+      </div>
+      <div class="edu-card">
+        <span class="edu-badge b-done">Completed</span>
+        <div class="edu-deg">Bachelor of Engineering (Honours)<br/>in Information Technology</div>
+        <div class="edu-school">Technological University Mandalay, Myanmar</div>
+        <div class="edu-period">Dec 2013 – Dec 2019</div>
+        <ul class="edu-hl">
+          <li>Honours degree in Information Technology engineering</li>
+          <li>Foundation in algorithms, data structures & networking</li>
+          <li>Software development methodology & project management</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="projects">
+  <div class="section-inner">
+    <p class="section-eyebrow">Key Projects</p>
+    <h2 class="section-title">Things I've built</h2>
+    <p class="section-sub">Production features, academic projects, and everything in between.</p>
+    <div class="proj-grid">
+      <div class="proj-card pv">
+        <div class="proj-role">NUS-ISS Capstone · Marketplace Module Lead</div>
+        <div class="proj-name">🌱 EcoPlate</div>
+        <div class="proj-desc">A food sustainability platform with P2P marketplace, ML-powered price recommendations, and real-time messaging — built to reduce food waste across communities.</div>
+        <ul class="proj-hl"><li>Complete P2P marketplace frontend with real-time chat & transaction lifecycle</li><li>ML-powered price recommendation via REST API</li><li>76.7% line coverage & 73% function coverage — CI/CD pipeline via GitHub Actions</li></ul>
+        <div class="chips"><span class="tag tag-v">React</span><span class="tag tag-v">TypeScript</span><span class="tag tag-t">Flask</span><span class="tag tag-w">Capacitor</span><span class="tag tag-w">Vitest</span><span class="tag tag-w">Selenium</span></div>
+      </div>
+      <div class="proj-card pg">
+        <div class="proj-role">NUS-ISS Project · Backend Developer</div>
+        <div class="proj-name">🛒 Shopping Cart — Review System</div>
+        <div class="proj-desc">A complete review and rating system for an e-commerce platform, built with Spring Boot MVC and robust concurrency handling.</div>
+        <ul class="proj-hl"><li>RESTful endpoints for review CRUD with JPA repositories</li><li>Optimistic locking for concurrent rating updates</li><li>Comprehensive JUnit test coverage across all layers</li></ul>
+        <div class="chips"><span class="tag tag-g">Java Spring Boot</span><span class="tag tag-g">JPA</span><span class="tag tag-w">JUnit</span><span class="tag tag-w">RESTful API</span><span class="tag tag-w">MVC</span></div>
+      </div>
+      <div class="proj-card pt" style="grid-column:span 2;">
+        <div class="proj-role">Magenta Consulting · Production Internship</div>
+        <div class="proj-name">⚡ AcceClaim — AI-powered Redemption SaaS</div>
+        <div class="proj-desc">An enterprise B2B/B2C redemption management platform serving real business clients. I contributed production features, documentation, and QA across the entire platform.</div>
+        <ul class="proj-hl"><li>Full-stack feature development across the redemption workflow — UI components to API routes</li><li>Swagger UI documentation for 120+ API routes, adopted by the entire team</li><li>CI/CD pipeline setup that automated deployment and reduced manual steps</li><li>37 UAT issues identified and resolved across 6 modules in close client collaboration</li></ul>
+        <div class="chips"><span class="tag tag-v">Next.js 16</span><span class="tag tag-v">TypeScript</span><span class="tag tag-t">PostgreSQL</span><span class="tag tag-t">Prisma ORM</span><span class="tag tag-g">Azure Blob Storage</span><span class="tag tag-w">Tailwind CSS</span><span class="tag tag-w">Swagger</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="hackathon">
+  <div class="section-inner">
+    <div class="hack-inner">
+      <div class="hack-photo">
+        <img src="images/aws-hackathon.jpg" alt="Tracy at AWS Hackathon"/>
+        <div class="hack-overlay"><div class="hack-ov-label">Event</div><div class="hack-ov-val">AWS Skills to Jobs Tech Alliance · Singapore</div></div>
+      </div>
+      <div>
+        <div class="aws-badge"><span style="font-size:16px;">☁️</span><span class="aws-badge-text">AWS Hackathon Participant</span></div>
+        <p class="section-eyebrow">Hackathon</p>
+        <h2 class="section-title" style="margin-bottom:12px;">AWS Skills to Jobs<br/>Tech Alliance</h2>
+        <p style="font-size:15px;color:var(--text3);line-height:1.75;">Participated in the AWS Skills to Jobs Tech Alliance Hackathon during my NUS-ISS GDipSA journey — working alongside peers to build cloud-powered solutions under real pressure.</p>
+        <ul class="hack-pts">
+          <li>Collaborated in a cross-functional team to design and prototype a cloud solution using AWS services</li>
+          <li>Applied full-stack skills under hackathon constraints — from ideation to working demo</li>
+          <li>Experienced Singapore's tech ecosystem and networked with industry professionals</li>
+          <li>Strengthened cloud architecture thinking and rapid prototyping ability</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="gallery">
+  <div class="section-inner">
+    <p class="section-eyebrow">Teaching Gallery</p>
+    <h2 class="section-title">Two years in the classroom</h2>
+    <p class="section-sub">Building STEM curiosity in 200+ students across Myanmar — Scratch, Robotics, ICT, and everything in between.</p>
+    <div class="gal-grid">
+      <div class="gal-item"><img src="images/summer-class.jpg" alt="Class photo"/><div class="gal-cap">Class photo at Myanmar International Academy</div></div>
+      <div class="gal-item"><img src="images/scratch-class.jpg" alt="Scratch programming"/><div class="gal-cap">Scratch programming lesson</div></div>
+      <div class="gal-item"><img src="images/tracy-blue-robotics.jpg" alt="Robotics class"/><div class="gal-cap">Robotics class with MIA students</div></div>
+      <div class="gal-item"><img src="images/robotics-team1.jpg" alt="Robotics team"/><div class="gal-cap">Students with completed crane robot</div></div>
+      <div class="gal-item"><img src="images/ict-project.jpg" alt="ICT Project"/><div class="gal-cap">CREAM-5 ICT Project — Smart City showcase</div></div>
+      <div class="gal-item"><img src="images/robotics-team2.jpg" alt="Robotics boys"/><div class="gal-cap">Robotics project team</div></div>
+      <div class="gal-item"><img src="images/snow-robot.jpg" alt="SNOW Robot"/><div class="gal-cap">SNOW Obstacle Avoidance Robot — student project</div></div>
+      <div class="gal-item"><img src="images/computer-lab.jpg" alt="Computer lab"/><div class="gal-cap">Teaching ICT in the computer lab</div></div>
+      <div class="gal-item"><img src="images/awards-stage.jpg" alt="Awards ceremony"/><div class="gal-cap">Presenting medals at MIA awards ceremony</div></div>
+      <div class="gal-item"><img src="images/html-coding.jpg" alt="HTML class"/><div class="gal-cap">Teaching HTML — students build their first webpages</div></div>
+      <div class="gal-item"><img src="images/scratch-explore.jpg" alt="Exploring Scratch"/><div class="gal-cap">Students exploring Scratch & digital projects</div></div>
+      <div class="gal-item"><img src="images/robotics-build.jpg" alt="Building robots"/><div class="gal-cap">Hands-on robotics assembly session</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="volunteering">
+  <div class="section-inner">
+    <div class="vol-inner">
+      <div>
+        <p class="section-eyebrow">Community</p>
+        <h2 class="section-title">Giving back in Singapore</h2>
+        <p style="font-size:15px;color:var(--text3);line-height:1.75;margin-bottom:18px;">Being new to Singapore didn't stop me from connecting with the community. I volunteer with <strong style="color:var(--text2);">Families for Life Singapore</strong> — because the habit of showing up for others doesn't stop at the classroom door.</p>
+        <div class="vol-tags">
+          <span class="tag tag-t">Families for Life 🇸🇬</span>
+          <span class="tag tag-w">Community Volunteer</span>
+          <span class="tag tag-w">Social Impact</span>
+        </div>
+        <p style="font-size:13px;color:var(--text3);line-height:1.7;margin-top:14px;">Upcoming: volunteering with <strong style="color:var(--violet);">Chen Su Lan Methodist Children's Home</strong> — teaching Scratch coding to children who need encouragement and opportunity.</p>
+      </div>
+      <div class="vol-photo"><img src="images/volunteer-sg.jpg" alt="Volunteering at Families for Life Singapore"/></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-c">
+      <p class="section-eyebrow" style="margin-bottom:10px;">Get In Touch</p>
+      <h2 class="contact-title">Let's build something<br/><em>meaningful</em> together.</h2>
+      <p class="contact-sub">Whether you're looking for a full-stack developer, want to collaborate on an AI project, or just want to say hello — I'd love to hear from you.</p>
+      <div class="contact-links">
+        <a href="mailto:tracylinn235@outlook.com" class="c-link"><span class="c-link-icon">✉️</span>tracylinn235@outlook.com</a>
+        <a href="tel:+6580659916" class="c-link"><span class="c-link-icon">📱</span>+65 8065 9916</a>
+        <a href="https://www.linkedin.com/in/thae-thae-hsu-539b35168/" target="_blank" class="c-link"><span class="c-link-icon">🔗</span>LinkedIn</a>
+        <a href="https://github.com/thaethaehsu" target="_blank" class="c-link"><span class="c-link-icon">💻</span>GitHub</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-name">Thae Thae Hsu · Tracy</span>
+  <span class="footer-copy">Full-Stack Developer · Singapore 🇸🇬 · Built with ❤️</span>
+</footer>
+
+<script>
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+  });
+}, {threshold:0.08});
+document.querySelectorAll('.tl-card,.skill-card,.proj-card,.edu-card,.gal-item').forEach(el => {
+  el.style.opacity='0'; el.style.transform='translateY(22px)';
+  el.style.transition='opacity 0.55s ease, transform 0.55s ease';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
